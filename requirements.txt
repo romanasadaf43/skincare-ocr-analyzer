@@ -1,0 +1,6 @@
+Flask
+pytesseract
+Pillow
+python-dotenv
+fuzzywuzzy
+python-Levenshtein
