@@ -1,14 +1,13 @@
 [
     {
-        "Product Name": "Derma Co salicinamide face wash",
-        "Brand": "Derma Co",
-        "Effectiveness Score": "8.9",
+        "Product Name": "Khadi Natural Green Tea Serum",
+        "Brand": "Khadi Natural",          
         "Safety Score": "9",
         "Suitable for Oily/Combination Skin": "1",
         "Suitable for Normal/Dry Skin": "0",
-        "Key Ingredients": "Salicylic Acid, Niacinamide",
         "Product Type": "Face Wash",
         "Price (INR)": "395",
+        "Key Ingredients": "Turmeric, Aloe Vera",
         "Availability": "Flipkart, Official Website"
     },
     {
@@ -516,9 +515,9 @@
         "Availability": "Amazon India, Nykaa"
     },
     {
-        "Product Name": "Dr. Sheth's Gulab & Glycolic Acid Face Wash",
-        "Brand": "Dr. Sheth's",
-        "Effectiveness Score": "7.7",
+        "Product Name": "Dr. Sheth's Glycolic Acid Face Wash",
+        "brand name": "Dr.Sheths's",
+        "Effectiveness Score":"7.7",
         "Safety Score": "7.5",
         "Suitable for Oily/Combination Skin": "1",
         "Suitable for Normal/Dry Skin": "0",

@@ -1,0 +1,130 @@
+
+.choose-btn:hover {
+    background-color: #f0eaf5;
+    border-color: #a792bf;
+}
+
+/* Style for Analyze button */
+.analyze-btn {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #7dc9c2, #96d1c7);
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.analyze-btn:hover {
+    background: linear-gradient(to right, #5ebfb3, #7cd3c2);
+    box-shadow: 0px 4px 12px rgba(124, 211, 194, 0.4);
+}
+
+
+.container {
+    max-width: 700px;
+    width: 100%;
+    padding: 2rem;
+}
+
+.card {
+    background: linear-gradient(145deg, #ffffff, #f2f2f2);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.file-upload {
+    background: #fff8f0;
+    border: 2px dashed #ffd6d6;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #000000;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.file-upload:hover {
+    background: #fff0ea;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.analyze-btn {
+    background: linear-gradient(135deg, #292823, #000000);
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 15px rgba(163, 216, 244, 0.4);
+}
+
+.analyze-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(163, 216, 244, 0.6);
+}
+
+.message {
+    color: #d46a6a;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.result {
+    margin-top: 2rem;
+    text-align: left;
+    background-color: #fefefe;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.result h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.result p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: 
+        linear-gradient(120deg, rgba(200, 233, 239, 0.95), rgba(235, 237, 238, 0.95)),
+        url("https://images.unsplash.com/photo-1618375529730-7b23b203a58b?auto=format&fit=crop&w=1950&q=80") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}

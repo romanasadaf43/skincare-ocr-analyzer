@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skincare OCR Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1 class="title">Skincare OCR Analyzer</h1>
+
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <label class="choose-btn">
+                    📁 Choose Image
+                    <input type="file" name="image" accept="image/*" required style="display: none;">
+                </label>
+                <P></P>
+                <button type="submit" class="analyze-btn">✨ Analyze</button>
+            </form>
+            
+
+            {% if message %}
+                <p class="message">{{ message }}</p>
+            {% endif %}
+
+            {% if product %}
+                <div class="result">
+                    <h2>Best Match: {{ product.name }}</h2>
+                    <p><strong>Brand:</strong> {{ product.brand }}</p>
+                    <p><strong>Type:</strong> {{ product.type }}</p>
+                    <!--p><strong>Suitable for:</strong> {{ product.suitable_for }}</p-->
+                    <p><strong>Price:</strong> ₹{{ product.price }}</p>
+                    <p><strong>Effectiveness Score:</strong> {{ product.effectiveness }}</p>
+                    <p><strong>Safety Score:</strong> {{ product.safety }}</p>
+                    <canvas id="scoreChart"></canvas>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        {% if product %}
+        const ctx = document.getElementById('scoreChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Effectiveness', 'Safety'],
+                datasets: [{
+                    label: 'Score',
+                    data: [{{ product.effectiveness }}, {{ product.safety }}],
+                    backgroundColor: ['#A3D8F4', '#FFB6B9']
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+        {% endif %}
+    </script>
+</body>
+</html>
