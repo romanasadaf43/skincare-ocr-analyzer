@@ -10,6 +10,19 @@
         "Key Ingredients": "Turmeric, Aloe Vera",
         "Availability": "Flipkart, Official Website"
     },
+    { 
+        "Product Name": "Derma Co salicinamide face wash",
+        "Brand": "Derma Co",
+        "Effectiveness Score": "8.9",
+        "Safety Score": "9",
+        "Suitable for Oily/Combination Skin": "1",
+        "Suitable for Normal/Dry Skin": "1",
+        "Key Ingredients": "Turmeric, Saffron",
+        "Product Type": "facewash",
+        "Price (INR)": "700",
+        "Availability": "Nykaa, Flipkart"
+
+    },
     {
         "Product Name": "The Derma Co Green Tea Sunscreen",
         "Brand": "The Derma Co",
@@ -514,8 +527,7 @@
         "Price (INR)": "236",
         "Availability": "Amazon India, Nykaa"
     },
-    {
-        "Product Name": "Dr. Sheth's Glycolic Acid Face Wash",
+    {   "Product Name": "Dr. Sheth's Glycolic Acid Face Wash",
         "brand name": "Dr.Sheths's",
         "Effectiveness Score":"7.7",
         "Safety Score": "7.5",
