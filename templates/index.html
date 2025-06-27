@@ -16,10 +16,9 @@
                     📁 Choose Image
                     <input type="file" name="image" accept="image/*" required style="display: none;">
                 </label>
-                <P></P>
+                <p></p>
                 <button type="submit" class="analyze-btn">✨ Analyze</button>
             </form>
-            
 
             {% if message %}
                 <p class="message">{{ message }}</p>
@@ -29,11 +28,9 @@
                 <div class="result">
                     <h2>Best Match: {{ product.name }}</h2>
                     <p><strong>Brand:</strong> {{ product.brand }}</p>
-                    <p><strong>Type:</strong> {{ product.type }}</p>
-                    <!--p><strong>Suitable for:</strong> {{ product.suitable_for }}</p-->
-                    <p><strong>Price:</strong> ₹{{ product.price }}</p>
-                    <p><strong>Effectiveness Score:</strong> {{ product.effectiveness }}</p>
-                    <p><strong>Safety Score:</strong> {{ product.safety }}</p>
+                    <p><strong>Key Ingredient:</strong> {{ product.ingredient }}</p>
+                    <p><strong>Effectiveness Score:</strong> {{ product.effectiveness_score }}</p>
+                    <p><strong>Risk Score:</strong> {{ product.risk_score }}</p>
                     <canvas id="scoreChart"></canvas>
                 </div>
             {% endif %}
@@ -47,10 +44,10 @@
         const chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Effectiveness', 'Safety'],
+                labels: ['Effectiveness Score', 'Risk Score'],
                 datasets: [{
                     label: 'Score',
-                    data: [{{ product.effectiveness }}, {{ product.safety }}],
+                    data: [{{ product.effectiveness_score }}, {{ product.risk_score }}],
                     backgroundColor: ['#A3D8F4', '#FFB6B9']
                 }]
             },
