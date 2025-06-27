@@ -15,7 +15,6 @@ template_dir = os.path.join(base_dir, "..", "templates")
 static_dir = os.path.join(base_dir, "..", "static")
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
-
 CORS(app)
 print("Template Path:", os.path.abspath(app.template_folder))
 print("Static Path:", os.path.abspath(app.static_folder))
@@ -24,21 +23,28 @@ UPLOAD_FOLDER = os.path.join("static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Load product data
-base_dir = os.path.dirname(os.path.abspath(__file__))
 json_path = os.path.join(base_dir, '../products.json')
+
+# Helper functions to safely parse numbers
+def safe_int(value, default=0):
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return default
+
+def safe_float(value, default=0.0):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
 
 def normalize_product(p):
     return {
-        "name": p.get("Product Name", ""),
-        "brand": p.get("Brand", ""),
-        "type": p.get("Product Type", ""),
-        "effectiveness": float(p.get("Effectiveness Score", 0)),
-        "safety": float(p.get("Safety Score", 0)),
-        "ingredients": p.get("Key Ingredients", ""),
-        "price": p.get("Price (INR)", ""),
-        "availability": p.get("Availability", ""),
-        "suitable_oily": bool(int(p.get("Suitable for Oily/Combination Skin", 0))),
-        "suitable_dry": bool(int(p.get("Suitable for Normal/Dry Skin", 0)))
+        "name": p.get("Product Name", "").strip(),
+        "brand": p.get("Brand", "").strip(),
+        "ingredient": p.get("Key Ingredient", "").strip(),
+        "risk_score": safe_int(p.get("Risk Score", 0)),
+        "effectiveness_score": safe_float(p.get("Effectiveness Score (Based on Key Ingredient)", 0))
     }
 
 with open(json_path) as f:
@@ -101,43 +107,30 @@ def match_product(entities, products):
     for product in products:
         brand = correct_text(product.get("brand", "").lower())
         name = product.get("name", "").lower()
-        full_text = f"{brand} {name}".lower()
-        ingredients = product.get("ingredients", "").lower()
-        product_type = product.get("type", "").lower()
+        ingredient = product.get("ingredient", "").lower()
 
         best_score = 0
         for entity in entities:
             e = entity.lower()
             name_score = fuzz.token_set_ratio(e, name)
             brand_score = fuzz.partial_ratio(e, brand)
-            ingredient_score = fuzz.token_set_ratio(e, ingredients)
-            type_score = fuzz.partial_ratio(e, product_type)
-            fulltext_score = fuzz.token_sort_ratio(e, full_text)
+            ingredient_score = fuzz.token_set_ratio(e, ingredient)
 
             total_score = (
-                0.35 * name_score +
-                0.25 * ingredient_score +
-                0.15 * type_score +
-                0.15 * fulltext_score +
-                0.10 * brand_score
+                0.5 * name_score +
+                0.3 * ingredient_score +
+                0.2 * brand_score
             )
             best_score = max(best_score, total_score)
 
-        # Apply heuristics (boosts)
         boost = 0
-        if "face wash" in all_text or "cleanser" in all_text:
-            if "face wash" in product_type or "cleanser" in product_type:
-                boost += 7
-        if brand in all_text or ("sheth" in brand and "gulab" in all_text):
+        if brand in all_text:
             boost += 10
-        key_ingredients = ["glycolic", "salicylic", "niacinamide", "tea tree", "rose", "vitamin c"]
-        if any(k in all_text for k in key_ingredients if k in ingredients):
+        if ingredient in all_text:
             boost += 5
-        if "gulab" in all_text and "glycolic" in all_text and "glycolic" in ingredients:
-            boost += 8
         name_words = name.split()
         if sum(1 for word in name_words if word in all_text) >= 2:
-            boost += 4
+            boost += 5
 
         boosted_score = best_score + boost
         results.append((product, boosted_score))
@@ -149,11 +142,9 @@ def match_product(entities, products):
     for prod, score in top_results:
         print(f"- {prod['brand']} - {prod['name']} => Score: {score}")
 
-    # Score threshold check
     if not top_results or top_results[0][1] < 50:
         return None, 0
 
-    # SBERT similarity for best match selection
     if entities:
         ocr_query = " ".join(entities)
         query_embed = sbert_model.encode(ocr_query, convert_to_tensor=True)
@@ -164,7 +155,6 @@ def match_product(entities, products):
         return top_results[best_idx]
 
     return top_results[0]
-
 
 @app.route("/", methods=["GET", "POST"])
 def index():
